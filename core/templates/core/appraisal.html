@@ -1,0 +1,214 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item active">Employee Appraisal</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="container animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card-group">
+                    <div class="card p-4 mb-5">
+                        <div class="card-body">
+                            {% if created %}
+                              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                                  Appraisal Complete
+                              </div>
+                            {% endif %}
+                                {% csrf_token %}
+                                <h1>Employee Appraisal</h1>
+                                <p class="text-muted">Appraise the Employees!!</p>
+			                    	<form action="" method="post">
+			                        {% csrf_token %}
+
+			                        <div class="form-group">
+			                            <div class="input-group">
+			                               
+			                                <div class="input-group-append">
+			                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+			                                </div>
+			                                 {{ form.emp }}
+			                                {% if form.emp.errors %}
+			                                    <ol>
+			                                    {% for error in form.emp.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                        	Job Performance
+			                            <div class="input-group">
+			                                
+			                               
+
+			                                {{ form.job }}
+			                                {% if form.job.errors %}
+			                                    <ol>
+			                                    {% for error in form.first_name.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Goal Fullfillment
+			                            <div class="input-group">
+			                          
+			                                {{ form.attend }}
+			                                {% if form.attend.errors %}
+			                                    <ol>
+			                                    {% for error in form.last_name.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Communication
+			                            <div class="input-group">
+			                            	
+			                                {{ form.commu }}
+			                                
+			                                {% if form.commu.errors %}
+			                                    <ol>
+			                                    {% for error in form.commu.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Attitude
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.attitude }}
+			                                {% if form.attitude.errors %}
+			                                    <ol>
+			                                    {% for error in form.attitude.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+
+			                        <div class="form-group">
+			                        	Group Work
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.group_work }}
+			                                {% if form.group_work.errors %}
+			                                    <ol>
+			                                    {% for error in form.group_work.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Creativity
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.creativity }}
+			                                {% if form.creativity.errors %}
+			                                    <ol>
+			                                    {% for error in form.creativity.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Dependibility
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.dependibility }}
+			                                {% if form.dependibility.errors %}
+			                                    <ol>
+			                                    {% for error in form.dependibility.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Coworker Relations
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.coworker_relations }}
+			                                {% if form.coworker_relations.errors %}
+			                                    <ol>
+			                                    {% for error in form.coworker_relations.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                        	Independent Work
+			                            <div class="input-group">
+			                                
+			                              
+			                                {{ form.independent_work }}
+			                                {% if form.independent_work.errors %}
+			                                    <ol>
+			                                    {% for error in form.independent_work.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+
+			                        <div class="form-group">
+			                            <div class="input-group">
+			                                
+			                                <div class="input-group-append">
+			                                    <span class="input-group-text"><i class="fa fa-industry"></i></span>
+			                                </div>
+			                                {{ form.comment }}
+			                                {% if form.comment.errors %}
+			                                    <ol>
+			                                    {% for error in form.comment.errors %}
+			                                        <li><strong>{{ error|escape }}</strong></li>
+			                                    {% endfor %}
+			                                    </ol>
+			                                {% endif %}
+			                            </div>
+			                        </div>
+
+			                        <div class="">
+			                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-dot-circle-o"></i> Submit</button>
+			                            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+			                        </div>
+			                    </form>
+                            {{ form.errors }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

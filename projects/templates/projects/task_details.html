@@ -1,0 +1,76 @@
+  {% extends 'core/base.html' %}
+  {% load static %}
+
+  {% block breadcrumb %}
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item">Project</li>
+          <li class="breadcrumb-item active">Tasks's View</li>
+  {% endblock breadcrumb%}
+
+  {% block content %}
+  <div class="container-fluid">
+      <div class="animated fade-in">
+          <div class="row">
+              <div class="col-md-12">
+                      <div class="card">
+                          <div class="card-header">
+                              {% if user.is_staff %} 
+                                <strong>Tasks Under Review</strong>
+                              {% else %}
+                                <strong>{{ curr_user.get_username }}'s Tasks </strong>
+                              {% endif %}
+
+                          </div>
+                          <div class="card-body">
+                              <div class="row">
+                                  {% for t1 in tasks %}
+                                  <div class="col-sm-12">
+                                      <div class="card mx-2">
+                                        <div class="card-body pb-0">
+                                            <div class="col" style="display:flex; width:100%">
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px">
+                                                <h4>{{ t1.task_name }}</h4>
+                                              </div>
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px; text-align:center">
+                                                <h5>Due : {{ t1.deadline }} </h5>
+                                              </div>
+                                              {% if user.is_staff %} 
+                                                <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px; text-align:center">
+                                                <h5> {{ t1.assign }} </h5>
+                                              </div>
+                                              {% else %}
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px; text-align:center">
+                                                <h5>{% if t1.status == '2' %}
+                                                    <p class="text-right lead text-danger">Working</p>
+                                                {% elif t1.status == '1' %}
+                                                    <p class="text-right lead text-info">Under Review</p>
+                                                {% else %}
+                                                    <p class="text-right lead text-success">Done</p>
+                                                {% endif %} </h5>
+                                              </div>
+                                              {% endif %}
+                                              {% if user.is_staff %} 
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px; text-align:center">
+                                                <a type="submit" class="btn btn-sm btn-success" href="{% url 'projects:change_status' taskId=t1.id %}"><i class="fa fa-dot-circle-o"></i> Approve </a>
+                                                <a type="submit" class="btn btn-sm btn-failed" href="{% url 'projects:reject_review' id=t1.id status=t1.status %}"><i class="fa fa-dot-circle-o"></i> Reject </a>
+                                              </div>
+                                              {% else %}
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px; text-align:center">
+                                                <a type="submit" class="btn btn-sm btn-success" href="{% url 'projects:change_status' taskId=t1.id %}"><i class="fa fa-dot-circle-o"></i> Send for Review</a>
+                                              </div>
+                                              {% endif %}
+                                            </div>
+                                        </div>
+
+                                      </div>
+                                  </div>
+                                  {% endfor %}
+                              </div><br>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  {% endblock %}

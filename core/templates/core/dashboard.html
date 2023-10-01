@@ -1,0 +1,135 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="animated fadeIn">
+  
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="{% url 'register:companyView'%}">View Companies</a>
+            </div>
+          </div>
+          <h4 class="mb-0">{{ companies.count }}</h4>
+          <p>Registered Companies</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="{% url 'register:users'%}">View Users</a>
+            </div>
+          </div>
+          <h4 class="mb-0">{{ users.count }}</h4>
+          <p>Registered Users</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="{% url 'projects:projects'%}">View Projects</a>
+            </div>
+          </div>
+          <h4 class="mb-0">{{ projects.count }}</h4>
+          <p>Projects</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="{% url 'register:tasksView'%}">View Tasks</a>
+            </div>
+          </div>
+          <h4 class="mb-0">{{ tasks.count }}</h4>
+          <p>Tasks</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="card text-black">
+        <div class="card-body pb-0">
+          <div class="col" style="display:flex; width:100%">
+            <div style="flex: 0 1 100%; min-height: 100%;max-width: 100%; padding:10px; text-align:center">
+              <h1>Current Projects</h1>
+            </div>
+          </div>
+          {% for p in projects %}
+          <div class="col" style="display:flex; width:100%">
+            <div style="flex: 0 1 50%; min-height: 100%;max-width: 50%; padding:10px">
+              <h4>{{ p.name }}</h4>
+            </div>
+            <div style="flex: 0 1 50%; min-height: 100%;max-width: 50%; padding:10px; text-align:center">
+              <a class="btn p-0" href="{% url 'core:genreport' id=p.id %}"> Download Status Report </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% autoescape off %} 
+    <div class="col-sm-6"> 
+      <div class="card text-black">
+        <div class="card-body pb-0">
+          {{ pie }} 
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6"> 
+      <div class="card text-black">
+        <div class="card-body pb-0">
+          {{ pieIss }} 
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12"> 
+      <div class="card text-black">
+        <div class="card-body pb-0">
+          {{ bar }} 
+        </div>
+      </div>
+    </div>
+
+    {% endautoescape %} 
+
+    
+</div>
+</div>
+
+{% endblock %}

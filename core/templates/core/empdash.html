@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="animated fadeIn">
+
+<div class="row">
+
+
+	<div class="col-sm-3">
+        <div class="card card-border-primary">
+        	<div class="card-header">
+            	<h5 class="card-title">Current Project</h5>
+            </div>
+            <div class="card-body">
+            	<h4 class="mb-0">{{ project.name }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card card-border-primary">
+            <div class="card-header">
+                <h5 class="card-title">Project Start</h5>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-0">{{ project.add_date }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card card-border-primary">
+        	<div class="card-header">
+            	<h5 class="card-title">Project Deadline</h5>
+            </div>
+            <div class="card-body">
+            	<h4 class="mb-0">{{ project.dead_line }}</h4>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="col-sm-3">
+        <div class="card card-border-primary">
+        	<div class="card-header">
+            	<h5 class="card-title">Total Tasks</h5>
+            </div>
+            <div class="card-body">
+            	<h4 class="mb-0">{{ total }}</h4>
+            </div>
+        </div>
+    </div>
+
+	<div class="col-sm-6">
+        <div class="card card-border-primary">
+        	<div class="card-header">
+            	<h5 class="card-title">My Tasks</h5>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr><td><h3 style="float: center">Task Names</h3></td><td><h3 style="float: center">Deadline</h3></td></tr>
+                	{% for t in tasks %}
+                    <tr>
+                	<td><h4 class="mb-0">{{ t.task_name }}</h4></td>
+                    <td><h4 class="mb-0" style="float: center">{{ t.deadline }} </h4></td>
+                    </tr>
+                	{% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card card-border-primary">
+            <div class="card-header">
+                <h5 class="card-title">My Issues</h5>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr><td><h3 style="float: center">Issue Names</h3></td><td><h3 style="float: center">Deadline</h3></td></tr>
+                    {% for t in issue %}
+                    <tr>
+                    <td><h4 class="mb-0">{{ t.name }}</h4></td>
+                    <td><h4 class="mb-0" style="float: center">{{ t.deadline }} </h4></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card bg-white">
+            <div class="card-header">
+                <h3> My Team</h3>
+            </div>
+            <div class="card-body">
+                {% for t in team %}
+                <div style="height: 7em">
+                    <p style="float: left; width: 30%"><img class="brand-gui ml-2 d-none d-sm-block mt-2" src="{{ logged_user.img.url }}"></p>
+                    <p style="float: right; width: 70%"><h4 style="width: 100%">{{ t.first_name }} {{ t.last_name }}</h4></p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+    
+            
+
+
+{% endblock %}

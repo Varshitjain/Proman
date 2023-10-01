@@ -1,0 +1,276 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{% static 'core/vendors/js/jquery.min.js'%}"></script>
+ 
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147225311-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-147225311-2');
+    </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google-site-verification" content="83fcqoPn-YTkXathQiicW-x3U2RWZh4PaPUzk91wtjY" />
+  <title>Promanagement</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+
+  <link href="{% static 'core/css/simple-line-icons.min.css' %}" rel="stylesheet">
+
+  <!-- Main styles for this application -->
+  <link href="{% static 'core/css/estilo.css' %}" rel="stylesheet">
+  <link href="{% static 'core/css/style.css' %}" rel="stylesheet">
+
+</head>
+{% block body %}
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+
+  <header class="app-header navbar">
+    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <img src="{% static 'core/img/logos/logo.jpeg' %}" alt="" class="brand-gui ml-2 d-none d-sm-block p-2">
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item d-md-down-none">
+        <!--<div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-bell"> </i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item">Action</a>
+            </div>
+          </div>-->
+      {% if user.is_authenticated %}
+      <li class="text-muted">Hello, {{ user.first_name }}</li>
+      {% else %}
+      <li class="text-muted">
+        <a href="{% url 'core:login' %}">Sign in</a>
+      </li>
+      {% endif %}
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          {% if user.is_authenticated %}
+          <img src="{{ logged_user.img.url }}" class="img-avatar" alt="{{ user }}">
+          {% else %}
+          <img src="{% static 'core/img/avatar/blank_profile.png' %}" class="img-avatar" alt="{{ user }}">
+          {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-header text-center">
+            <strong>Account</strong>
+          </div>
+          {% if user.is_authenticated %}
+          <!--<a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>-->
+          <!-- <a class="dropdown-item" href="{% url 'register:invites' %}"><i class="fa fa-envelope-o"></i> Invites<span class="badge badge-success">{{ logged_user.received_invites.count }}</span></a> -->
+          <a class="dropdown-item" href="{% url 'projects:tasksDetails' %}"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">{{ user.task_set.values.count }}</span></a>
+          <div class="dropdown-header text-center">
+            <strong>Settings</strong>
+          </div>
+          <a class="dropdown-item" href="{% url 'register:profile' %}"><i class="fa fa-user"></i> Profile</a>
+          <div class="divider"></div>
+          <a class="dropdown-item" href="{% url 'core:logout' %}"><i class="fa fa-lock"></i> Logout</a>
+          {% else %}
+          <a class="dropdown-item" href="{% url 'core:login' %}"><i class="fa fa-user"></i> Login</a>
+          {% endif %}
+        </div>
+      </li>
+    </ul>
+    <button class="navbar-toggler aside-menu-toggler" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  </header>
+
+  <div class="app-body">
+    <div class="sidebar">
+      <nav class="sidebar-nav">
+        <ul class="nav">
+          <li class="nav-item"> 
+            <a class="nav-link" href="{% url 'core:index' %}"><i class="fa fa-home"></i> Home</a>
+          </li>
+          {% if user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:dashboard' %}"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'core:churn' %}"><i class="fa fa-industry"></i> Churn</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'core:appraisal' %}"><i class="fa fa-industry"></i> Appraisal</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'core:ganttview' %}"><i class="fa fa-industry"></i> Gantt View</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'core:kanban' %}"><i class="fa fa-industry"></i> Issues</a>
+          </li>
+          {% elif user.is_authenticated %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:empdash' %}"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'projects:tasksDetails' %}"><i class="fa fa-industry"></i> Tasks</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{% url 'projects:issueDetails' %}"><i class="fa fa-industry"></i> Issue</a>
+          </li>
+
+          <li>
+            <a class="nav-link" href="{% url 'core:selfeval' %}"><i class="fa fa-industry"></i> Self-Evaluation</a>
+          </li>
+          {% endif %}
+
+          {% if user.is_staff %}
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-search"></i> Views</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:companyView'%}"><i class="fa fa-industry ml-2"></i> Company's View</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:users'%}"><i class="fa fa-user ml-2"></i> Users Views</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'projects:projects'%}"><i class="fa fa-paper-plane ml-2"></i> Project's View</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:tasksView'%}"><i class="fa fa-tasks ml-2"></i> Tasks's View</a>
+              </li>
+            </ul>
+          </li>
+
+            
+          
+          <li class="nav-title">
+            Register
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-industry"></i> Company</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:new-company'%}"><i class="fa fa-plus ml-2"></i> New Company</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects/Tasks</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'projects:new-project'%}"><i class="fa fa-plus ml-2"></i> New Project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'projects:new-task'%}"><i class="fa fa-plus ml-2"></i> New Task</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-user"></i> Users</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:new-user' %}"><i class="fa fa-user-plus ml-2"></i> Create New User</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="{% url 'register:friends' %}"><i class="fa fa-users ml-2"></i> Friends</a>
+              </li> -->
+            </ul>
+          </li>
+          {% else %}
+          <!-- <li class="nav-title">
+            Task Management
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=""><i class="fa fa-tasks"></i> My Tasks </a>
+          </li>  -->
+          {% endif %}
+          <li class="divider"></li>
+        </ul>
+      </nav>
+      <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+
+    <!-- Main content -->
+    <main class="main">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        {% block breadcrumb %}
+        <li class="breadcrumb-item active">Home</li>
+        <li class="breadcrumb-item">Dashboard</li>
+        {% endblock breadcrumb%}
+
+        <!-- Breadcrumb Menu-->
+
+      </ol>
+{% block content %}
+{% endblock %}
+    </main>
+
+    <aside class="aside-menu"> 
+      <div class="tab-content">
+        <div class="tab-pane active" id="timeline" role="tabpanel">
+          {% if user.is_authenticated %}
+          <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
+          </div>
+          {% for user in users_prof %}
+          {% if not user in friends %}
+          <div class="m-2 mt-4 float-left">
+              <div class="avatar">
+                <img src="{{ user.img.url }}" class="img-avatar" alt="{{ user.user.get_full_name }}">
+                <span class="avatar-status badge-success"></span>
+              </div>
+          </div>
+          <hr class="transparent mx-3 my-0">
+          <hr class="mx-3 my-0">
+          <div class="callout callout-success m-0 py-3">
+            <div>
+              <a href="{% url 'register:user' profile_id=user.id %}" class="text-dark">{{ user.user.first_name }} {{ user.user.last_name }}</a>
+            </div>
+              {% if user.user.last_login %}
+              <small class="text-muted mr-3">Last login: {{ user.user.last_login|date:"H:i" }} in {{ user.user.last_login|date:"d/m" }}</small>
+              {% else %}
+              <small class="text-muted mr-3">Never logged in</small>
+              {% endif %}
+            <small class="text-muted text-truncate"><i class="fa fa-industry"></i> {{ user.company }}</small>
+            <a href="{% url 'register:invite' profile_id=user.id %}" class="badge badge-success text-white">Send Invite</a>
+          </div>
+          {% else %}
+          {% endif %}
+          {% endfor %}
+          {% else %}
+          <div class="callout callout-success m-0 py-3">
+            <div>
+              <strong></strong></div>
+
+            <small class="text-muted text-truncate">Log in to see your Workers List</small>
+            <a href="{% url 'core:login' %}" class="badge badge-success text-white">Log in</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+   <script src="{% static 'core/vendors/js/popper.min.js'%}"></script>
+  <script src="{% static 'core/vendors/js/bootstrap.min.js'%}"></script>
+  <script src="{% static 'core/vendors/js/pace.min.js'%}"></script>
+  <!--<script src="{% static 'core/vendors/js/Chart.min.js'%}"></script>-->
+  <script src="{% static 'core/js/app.js'%}"></script>
+  <script src="{% static 'core/js/main.js'%}"></script>
+</body>
+{% endblock body %}
+</html>

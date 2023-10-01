@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">Project</li>
+        <li class="breadcrumb-item active">Tasks's View</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="animated fade-in">
+        <div class="row">
+            <div class="col-md-12">
+                {% for p1 in proj %}
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{{ p1.name }} Tasks</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for t1 in tasks %}
+                                {% if p1.name == t1.project.name %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body pb-0">
+                                            <div class="col" style="display:flex; width:100%">
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 25%; padding:10px">
+                                                <h4>{{ t1.task_name }}</h4>
+                                              </div>
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 20%; padding:10px; text-align:center">
+                                                <h5>{{ t1.assign.first_name }} </h5>
+                                              </div>
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 20%; padding:10px; text-align:center">
+                                                <h5>{{ t1.deadline }} </h5>
+                                              </div>
+                                              <div style="flex: 0 1 50%; min-height: 100%;max-width: 20%; padding:10px; text-align:center">
+                                                <h5>{% if t1.status == '1' %}
+                                                    <p class="text-right lead text-danger">Stuck</p>
+                                                {% elif t1.status == '2' %}
+                                                    <p class="text-right lead text-success">Working</p>
+                                                {% else %}
+                                                    <p class="text-right lead text-info">Done</p>
+                                                {% endif %} </h5>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div><br>
+                        </div>
+                    </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

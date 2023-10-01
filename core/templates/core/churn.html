@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block breadcrumb %}
+<li class="breadcrumb-item">Home</li>
+<li class="breadcrumb-item active">Churn Analysis</li>
+{% endblock breadcrumb%}
+{% block content %}
+
+
+<style media="screen">
+  .input-group-text,
+  .btn-primary {
+    width: 100%;
+    align: "left"
+  }
+
+  input::placeholder {
+    text-align: left;
+  }
+
+  input::value {
+    text-align: left;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    {% autoescape off %}
+
+    <div class="col-sm-6"> {{ genderG }} </div>
+    <div class="col-sm-6"> {{ salG }} </div>
+    <div class="col-sm-12" style="padding:20px"> {{ departG }} </div>
+
+    <div class="container animated fadeIn">
+      <div class="row justify-content-center">
+        <div class="col-sm-12">
+          <div class="card-group">
+            <div class="card p-4 mb-5">
+              <div class="card-body">
+                <h4> Employee's At Risk</h4> {{ data }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endautoescape %}
+
+  </div>
+</div>
+
+{% endblock %}
